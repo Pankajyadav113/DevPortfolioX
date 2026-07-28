@@ -17,6 +17,8 @@ export const projects: Project[] = [
       "Production-ready AWS infrastructure built using Terraform with modular architecture.",
     status: "In Progress",
     techStack: ["AWS", "Terraform", "IAM", "VPC"],
+    github: "https://github.com/Pankajyadav113",
+    live: "",
   },
 
   {
@@ -26,6 +28,8 @@ export const projects: Project[] = [
       "Provisioning Azure resources using reusable Terraform modules and best practices.",
     status: "Completed",
     techStack: ["Azure", "Terraform"],
+    github: "https://github.com/Pankajyadav113",
+    live: "",
   },
 
   {
@@ -35,6 +39,8 @@ export const projects: Project[] = [
       "Containerized web application deployed using Docker and Nginx.",
     status: "Completed",
     techStack: ["Docker", "Nginx"],
+    github: "https://github.com/Pankajyadav113/nginx-docker-project",
+    live: "",
   },
 
   {
@@ -44,6 +50,8 @@ export const projects: Project[] = [
       "Automated build and deployment pipeline using GitHub Actions.",
     status: "In Progress",
     techStack: ["GitHub Actions", "CI/CD"],
+    github: "https://github.com/Pankajyadav113",
+    live: "",
   },
 
   {
@@ -53,6 +61,8 @@ export const projects: Project[] = [
       "Monitoring Kubernetes workloads using Prometheus and Grafana.",
     status: "Planned",
     techStack: ["Kubernetes", "Prometheus", "Grafana"],
+    github: "",
+    live: "",
   },
 
   {
@@ -62,6 +72,8 @@ export const projects: Project[] = [
       "Security scanning pipeline using Trivy, Checkov and SonarQube.",
     status: "Planned",
     techStack: ["Trivy", "Checkov", "SonarQube"],
+    github: "",
+    live: "",
   },
 
   {
@@ -71,5 +83,7 @@ export const projects: Project[] = [
       "Deploying Jenkins on AWS with automated CI/CD workflows.",
     status: "Planned",
     techStack: ["Jenkins", "AWS"],
+    github: "",
+    live: "",
   },
 ];

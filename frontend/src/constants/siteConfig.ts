@@ -12,19 +12,31 @@ export const siteConfig = {
   navLinks: [
     {
       label: "Home",
-      href: "/",
+      href: "#home",
     },
     {
       label: "About",
-      href: "/about",
+      href: "#about",
+    },
+    {
+      label: "Skills",
+      href: "#skills",
     },
     {
       label: "Projects",
-      href: "/projects",
+      href: "#projects",
+    },
+    {
+      label: "Experience",
+      href: "#experience",
+    },
+    {
+      label: "Certificates",
+      href: "#certifications",
     },
     {
       label: "Contact",
-      href: "/contact",
+      href: "#contact",
     },
   ],
 };
