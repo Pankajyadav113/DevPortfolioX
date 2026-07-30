@@ -1,4 +1,8 @@
 import FadeIn from "../ui/FadeIn";
+
+import { useState } from "react";
+import { FaPaperPlane } from "react-icons/fa";
+import { sendContactMessage } from "../../api/contactApi";
 import {
   FaEnvelope,
   FaPhone,
@@ -10,11 +14,69 @@ import {
 import { contact } from "../../constants/contact";
 
 function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const [status, setStatus] = useState<{
+    type: "success" | "error" | "";
+    message: string;
+  }>({
+    type: "",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    setStatus({
+      type: "",
+      message: "",
+    });
+
+    try {
+      await sendContactMessage(formData);
+
+      setStatus({
+        type: "success",
+        message: "Message sent successfully 🚀",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (err) {
+      console.error(err);
+
+      setStatus({
+        type: "error",
+        message: "Failed to send message.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <section
-      id="contact"
-      className="bg-slate-950 py-24"
-    >
+    <section id="contact" className="bg-slate-950 py-24">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <div className="mb-16 text-center">
@@ -49,17 +111,13 @@ function ContactSection() {
                 <div className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-slate-950 p-5 transition-all duration-300 hover:border-cyan-400">
                   <FaPhone className="text-2xl text-cyan-400" />
 
-                  <span className="text-slate-300">
-                    {contact.phone}
-                  </span>
+                  <span className="text-slate-300">{contact.phone}</span>
                 </div>
 
                 <div className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-slate-950 p-5 transition-all duration-300 hover:border-cyan-400">
                   <FaMapMarkerAlt className="text-2xl text-cyan-400" />
 
-                  <span className="text-slate-300">
-                    {contact.location}
-                  </span>
+                  <span className="text-slate-300">{contact.location}</span>
                 </div>
               </div>
 
@@ -93,6 +151,74 @@ function ContactSection() {
                   <FaFileDownload />
                   Download Resume
                 </a>
+              </div>
+
+              {/* Contact Form */}
+
+              <div className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-5 py-4 text-white"
+                  />
+
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-5 py-4 text-white"
+                  />
+
+                  <input
+                    type="text"
+                    name="subject"
+                    placeholder="Subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-5 py-4 text-white"
+                  />
+
+                  <textarea
+                    name="message"
+                    rows={5}
+                    placeholder="Write your message..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-5 py-4 text-white"
+                  />
+
+                  {status.message && (
+                    <div
+                      className={`rounded-xl p-4 text-center ${
+                        status.type === "success"
+                          ? "bg-green-600 text-white"
+                          : "bg-red-600 text-white"
+                      }`}
+                    >
+                      {status.message}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-500 py-4 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:opacity-50"
+                  >
+                    <FaPaperPlane />
+
+                    {loading ? "Sending..." : "Send Message"}
+                  </button>
+                </form>
               </div>
             </div>
           </div>

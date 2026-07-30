@@ -1,10 +1,16 @@
 import express from "express";
 
-import { sendContactMessage } from "../controllers/contactController.js";
+import {
+  sendContactMessage,
+  getAllContacts,
+} from "../controllers/contactController.js";
+
 import { contactValidation } from "../middleware/validateContact.js";
 
 const router = express.Router();
 
-router.post("/", contactValidation, sendContactMessage);
+router.post("/",  sendContactMessage);
+
+router.get("/", getAllContacts);
 
 export default router;
