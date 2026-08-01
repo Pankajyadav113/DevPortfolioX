@@ -81,7 +81,7 @@ function HeroSection() {
               </Link>
 
               <a
-                href="/resume.pdf"
+                href="/resume/resume.pdf"
                 className="flex items-center gap-2 rounded-xl border border-slate-700 px-7 py-3 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
               >
                 <FaDownload />
@@ -107,7 +107,7 @@ function HeroSection() {
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/pankajyadav113/"
                 target="_blank"
                 rel="noreferrer"
                 className="rounded-full border border-slate-700 p-4 text-2xl text-slate-300 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
@@ -116,7 +116,7 @@ function HeroSection() {
               </a>
 
               <a
-                href="mailto:yourmail@gmail.com"
+                href="mailto:pankaj738074@gmail.com"
                 className="rounded-full border border-slate-700 p-4 text-2xl text-slate-300 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
               >
                 <FaEnvelope />

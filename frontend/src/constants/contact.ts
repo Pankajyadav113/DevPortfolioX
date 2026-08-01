@@ -1,11 +1,11 @@
 export const contact = {
-  email: "your-email@example.com",
-  phone: "+91 XXXXX XXXXX",
+  email: "pankaj738074@gmail.com",
+  phone: "+91 7238922584",
   location: "Prayagraj, Uttar Pradesh, India",
 
   github: "https://github.com/Pankajyadav113",
 
-  linkedin: "https://www.linkedin.com/in/your-linkedin",
+  linkedin: "https://www.linkedin.com/in/pankajyadav113/",
 
   resume: "/resume/resume.pdf",
 };

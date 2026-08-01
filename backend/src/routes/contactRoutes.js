@@ -9,8 +9,10 @@ import { contactValidation } from "../middleware/validateContact.js";
 
 const router = express.Router();
 
-router.post("/",  sendContactMessage);
+// Contact Form
+router.post("/", contactValidation, sendContactMessage);
 
+// Get All Contacts
 router.get("/", getAllContacts);
 
 export default router;
