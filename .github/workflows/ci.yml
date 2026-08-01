@@ -29,5 +29,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Type Check
+      - name: Build React App
         run: npm run build
+
+      - name: Build Docker Image
+        working-directory: .
+        run: docker build -t devportfoliox -f docker/Dockerfile .
