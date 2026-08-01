@@ -92,7 +92,7 @@ function Footer() {
           <p className="flex items-center gap-2">
             Built with
             <FaHeart className="text-red-500" />
-            React • TypeScript • Tailwind CSS • Vite
+            React • TypeScript • Tailwind CSS • Vite • Docker • GitHub Actions
           </p>
         </div>
       </div>
