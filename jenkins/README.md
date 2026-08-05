@@ -1,12 +1,10 @@
 # Jenkins CI/CD Projects
 
-This directory contains Jenkins projects focused on Continuous Integration (CI), Continuous Deployment (CD), automation, and production-ready DevOps workflows.
-
 ## Overview
 
-The purpose of this directory is to build real-world CI/CD pipelines using Jenkins for automating software development, testing, and deployment.
+This directory contains production-style Jenkins projects focused on Continuous Integration (CI), Continuous Deployment (CD), build automation and deployment workflows.
 
-These projects demonstrate how modern DevOps teams automate application delivery efficiently.
+The objective of these projects is to demonstrate how Jenkins automates software delivery using modern DevOps practices and Pipeline as Code.
 
 ---
 
@@ -17,25 +15,42 @@ These projects demonstrate how modern DevOps teams automate application delivery
 - Git
 - GitHub
 - GitHub Webhooks
-- Shell Scripting
 - Linux
-- AWS
-- Terraform
+- Shell Scripting
+- NGINX
+- GitHub Actions
 
 ---
 
-## Planned Structure
+## Repository Structure
 
 ```text
 jenkins/
 │
-├── freestyle-jobs/
-├── pipeline-jobs/
-├── shared-libraries/
-├── docker/
-├── terraform/
-├── scripts/
+├── Jenkinsfile
 └── README.md
+```
+
+---
+
+## Planned Pipeline
+
+```text
+Developer
+      │
+      ▼
+GitHub Repository
+      │
+      ▼
+Jenkins
+      │
+      ├── Checkout Source Code
+      ├── Install Dependencies
+      ├── Build Application
+      ├── Run Tests
+      ├── Build Docker Image
+      ├── Deploy Application
+      └── Notify Build Status
 ```
 
 ---
@@ -43,13 +58,14 @@ jenkins/
 ## Planned Projects
 
 - Jenkins Installation
-- Freestyle Jobs
+- Declarative Pipeline
 - Pipeline as Code
 - Multi-Stage CI/CD Pipeline
-- GitHub Webhook Integration
-- Docker Build Automation
-- Terraform Deployment Pipeline
-- AWS Deployment Pipeline
+- GitHub Integration
+- GitHub Webhooks
+- Docker Image Build
+- Docker Deployment
+- NGINX Deployment
 - Automated Testing Pipeline
 - Production Deployment Workflow
 
@@ -57,14 +73,15 @@ jenkins/
 
 ## Features
 
-- Continuous Integration
-- Continuous Deployment
+- Continuous Integration (CI)
+- Continuous Deployment (CD)
 - Automated Build Process
-- Automated Testing
-- GitHub Integration
-- Docker Integration
-- Infrastructure Automation
 - Pipeline as Code
+- Docker Integration
+- GitHub Integration
+- Linux Automation
+- Build Notifications
+- Production Workflow
 
 ---
 
@@ -72,17 +89,15 @@ jenkins/
 
 This directory will gradually include production-ready Jenkins projects covering:
 
-- Jenkins Setup
-- Build Pipelines
+- Jenkins Installation
+- Build Automation
 - Declarative Pipelines
 - Scripted Pipelines
-- Shared Libraries
-- Build Triggers
+- Pipeline as Code
 - GitHub Webhooks
 - Docker Pipelines
-- Terraform Automation
-- AWS Deployment
-- Notifications
+- Deployment Automation
+- Linux Automation
 - CI/CD Best Practices
 
 ---
@@ -91,7 +106,7 @@ This directory will gradually include production-ready Jenkins projects covering
 
 🚧 Work in Progress
 
-New Jenkins automation projects will be added regularly as I continue learning modern DevOps practices.
+Production-ready Jenkins CI/CD examples will be added as I continue building real-world DevOps projects.
 
 ---
 

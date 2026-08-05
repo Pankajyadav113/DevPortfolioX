@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+
+metadata:
+  name: devportfolio
+
+  labels:
+    app: devportfolio
+    environment: production
+    managed-by: kubernetes

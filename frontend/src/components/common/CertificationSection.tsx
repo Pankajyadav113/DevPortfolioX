@@ -57,9 +57,7 @@ function CertificationSection() {
                 <div className="mt-6 space-y-4">
                   <div className="flex items-center gap-3 text-slate-300">
                     <FaGraduationCap className="text-cyan-400" />
-                    <span>
-                      {certificate.issuer || certificate.issuer}
-                    </span>
+                    <span>{certificate.issuer}</span>
                   </div>
 
                   <div className="flex items-center gap-3 text-slate-300">

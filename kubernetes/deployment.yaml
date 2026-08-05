@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: devportfolio-deployment
+  namespace: devportfolio
+
+  labels:
+    app: devportfolio
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: devportfolio
+
+  strategy:
+    type: RollingUpdate
+
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  template:
+    metadata:
+      labels:
+        app: devportfolio
+
+    spec:
+      containers:
+        - name: devportfolio
+
+          image: nginx:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 80
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+
+            initialDelaySeconds: 5
+            periodSeconds: 5
