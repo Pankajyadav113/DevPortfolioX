@@ -1,122 +1,146 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { FaGithub, FaInfoCircle, FaCheckCircle } from "react-icons/fa";
 import FadeIn from "../ui/FadeIn";
-import { projects } from "../../constants/projects";
+import ProjectModal from "../ui/ProjectModal";
+import { projects, projectCategories, type Project } from "../../constants/projects";
 
-function getStatusColor(status: string) {
-  switch (status) {
-    case "Completed":
-      return "bg-green-500";
+export default function ProjectsSection() {
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [activeModalProject, setActiveModalProject] = useState<Project | null>(null);
 
-    case "In Progress":
-      return "bg-yellow-500 text-black";
+  const filteredProjects = selectedCategory === "All"
+    ? projects
+    : projects.filter((p) => p.category === selectedCategory);
 
-    default:
-      return "bg-blue-500";
-  }
-}
-
-function ProjectsSection() {
   return (
-    <section
-      id="projects"
-      className="bg-slate-900 py-24"
-    >
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="projects" className="py-24 bg-[#f1f5f9] dark:bg-[#090e1a] relative overflow-hidden transition-colors duration-300">
+      <div className="mx-auto max-w-7xl px-6 relative z-10">
+        
         <FadeIn>
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-white md:text-5xl">
+          <div className="text-center max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+              DevOps Showcase
+            </span>
+            <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
               Featured Projects
             </h2>
-
-            <div className="mx-auto mt-4 h-1 w-24 rounded-full bg-cyan-400"></div>
-
-            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-400">
-              Real-world DevOps projects showcasing Cloud Infrastructure,
-              Automation, CI/CD, Infrastructure as Code and production-ready
-              deployment practices.
+            <div className="mx-auto mt-4 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500" />
+            <p className="mt-6 text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+              Real-world DevOps implementations demonstrating Infrastructure as Code, Docker containerization, Kubernetes monitoring, and automated CI/CD security pipelines.
             </p>
           </div>
         </FadeIn>
 
-        <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project, index) => (
-            <FadeIn
-              key={project.id}
-              delay={index * 0.1}
+        {/* Category Filter Tabs */}
+        <div className="mt-12 flex flex-wrap justify-center gap-3">
+          {projectCategories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                selectedCategory === cat
+                  ? "bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/25 scale-105"
+                  : "bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-white"
+              }`}
             >
-              <div className="group flex h-full flex-col rounded-2xl border border-slate-800 bg-slate-950 p-7 transition-all duration-300 hover:-translate-y-3 hover:border-cyan-400 hover:shadow-[0_0_35px_rgba(34,211,238,0.15)]">
-                <div className="mb-6 flex items-start justify-between gap-4">
-                  <h3 className="text-xl font-bold text-white transition-colors duration-300 group-hover:text-cyan-400">
-                    {project.title}
-                  </h3>
+              {cat}
+            </button>
+          ))}
+        </div>
 
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold text-white ${getStatusColor(
-                      project.status
-                    )}`}
-                  >
+        {/* Projects Cards Grid */}
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.map((project, idx) => (
+            <FadeIn key={project.id} delay={idx * 0.08}>
+              <motion.div
+                whileHover={{ y: -8 }}
+                className="group flex flex-col h-full rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1222]/90 overflow-hidden backdrop-blur-md shadow-lg dark:shadow-2xl transition-all duration-300 hover:border-cyan-500 dark:hover:border-cyan-400/60"
+              >
+                {/* Project Banner Image */}
+                <div className="relative h-52 sm:h-56 overflow-hidden bg-slate-950">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 dark:from-[#0c1222] via-transparent to-transparent opacity-90" />
+
+                  {/* Clean Status Badge at Top Right */}
+                  <span className="absolute top-3.5 right-3.5 text-[11px] font-bold px-3 py-1 rounded-full bg-slate-950/80 border border-emerald-500/40 text-emerald-300 backdrop-blur-md flex items-center gap-1.5 shadow-md">
+                    <FaCheckCircle className="text-emerald-400 text-xs" />
                     {project.status}
                   </span>
                 </div>
 
-                <p className="flex-1 leading-7 text-slate-400">
-                  {project.description}
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-sm text-cyan-400"
-                    >
-                      {tech}
+                {/* Card Content Body */}
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
+                  <div className="space-y-3">
+                    {/* Category Label */}
+                    <span className="inline-block text-[11px] font-bold px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-700 dark:text-cyan-300 font-mono-code">
+                      {project.category}
                     </span>
-                  ))}
-                </div>
 
-                <div className="mt-8 flex flex-wrap gap-4">
-                  {project.github ? (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-xl bg-cyan-500 px-5 py-2.5 font-semibold text-slate-950 transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-400"
-                    >
-                      GitHub
-                    </a>
-                  ) : (
-                    <button
-                      disabled
-                      className="cursor-not-allowed rounded-xl bg-slate-700 px-5 py-2.5 font-semibold text-slate-400"
-                    >
-                      GitHub
-                    </button>
-                  )}
+                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+                      {project.description}
+                    </p>
+                  </div>
 
-                  {project.live ? (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-xl border border-slate-700 px-5 py-2.5 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
-                    >
-                      Live Demo
-                    </a>
-                  ) : (
+                  {/* Tech Stack Tags */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {project.techStack.slice(0, 5).map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-[11px] font-medium px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700/80 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.techStack.length > 5 && (
+                      <span className="text-[11px] font-medium px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500">
+                        +{project.techStack.length - 5}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between gap-3">
                     <button
-                      disabled
-                      className="cursor-not-allowed rounded-xl border border-slate-700 px-5 py-2.5 font-semibold text-slate-500"
+                      onClick={() => setActiveModalProject(project)}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition-all text-xs shadow-md shadow-cyan-500/20 cursor-pointer"
                     >
-                      In Development
+                      <FaInfoCircle className="text-slate-950 text-sm" /> Deep Dive Architecture
                     </button>
-                  )}
+
+                    {project.github ? (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        title="GitHub Repository"
+                        className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-300 transition-all text-sm"
+                      >
+                        <FaGithub />
+                      </a>
+                    ) : null}
+                  </div>
+
                 </div>
-              </div>
+              </motion.div>
             </FadeIn>
           ))}
         </div>
+
       </div>
+
+      {/* Project Architecture Detail Modal */}
+      <ProjectModal
+        project={activeModalProject}
+        onClose={() => setActiveModalProject(null)}
+      />
     </section>
   );
 }
-
-export default ProjectsSection;
