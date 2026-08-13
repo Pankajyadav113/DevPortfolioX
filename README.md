@@ -49,7 +49,6 @@ DevPortfolioX/
 ├── .gitignore                  # Git Ignore Rules
 ├── LICENSE                     # MIT License
 ├── README.md                   # Repository Master Documentation
-├── screenshots/                # Application UI Screenshots
 │
 ├── frontend/                   # React 19 + TypeScript + Vite Frontend
 │   ├── public/                 # Favicons, Resume PDF, Certificates & Static Media
