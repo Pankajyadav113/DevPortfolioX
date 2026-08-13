@@ -46,8 +46,6 @@
 
 ```text
 DevPortfolioX/
-├── .github/                    # GitHub Actions CI/CD Workflows
-│   └── workflows/ci.yml
 ├── .gitignore                  # Git Ignore Rules
 ├── LICENSE                     # MIT License
 ├── README.md                   # Repository Master Documentation
