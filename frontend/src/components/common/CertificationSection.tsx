@@ -1,122 +1,116 @@
-import { motion } from "framer-motion";
-import { FaCertificate, FaExternalLinkAlt, FaAward, FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
-import FadeIn from "../ui/FadeIn";
-import { certifications } from "../../constants/certifications";
+import React from 'react';
+import { EDUCATION_DATA, CERTIFICATIONS } from '../../data/portfolioData';
+import { GraduationCap, Award, Calendar, Sparkles, BookOpen } from 'lucide-react';
 
-export default function CertificationSection() {
+export const CertificationSection: React.FC = () => {
   return (
-    <section id="certifications" className="py-24 bg-[#f8fafc] dark:bg-[#070b14] relative overflow-hidden transition-colors duration-300">
-      <div className="mx-auto max-w-7xl px-6 relative z-10">
+    <section id="certifications" className="py-20 px-4 sm:px-6 relative">
+      <div className="max-w-6xl mx-auto space-y-16">
         
-        <FadeIn>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-              Verified Achievements
-            </span>
-            <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
-              Certifications & Training
-            </h2>
-            <div className="mx-auto mt-4 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500" />
-            <p className="mt-6 text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-              Professional credentials, cloud bootcamps, and ongoing learning milestones in DevOps, Cloud Engineering, and Terraform Infrastructure as Code.
-            </p>
+        {/* Section Header */}
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider">
+            Academic Background & Certifications
           </div>
-        </FadeIn>
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
+            Education & <span className="text-cyan-500">Credentials</span>
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium">
+            Engineering degree background combined with targeted cloud engineering training.
+          </p>
+        </div>
 
-        {/* Certifications Grid */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certifications.map((cert, idx) => (
-            <FadeIn key={cert.id} delay={idx * 0.12}>
-              <motion.div
-                whileHover={{ y: -8 }}
-                className="group flex flex-col justify-between h-full rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1222]/90 p-7 backdrop-blur-md transition-all duration-300 hover:border-cyan-500 dark:hover:border-cyan-400/60 shadow-lg space-y-6"
-              >
-                {/* Header */}
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 p-3 text-slate-950 flex items-center justify-center text-xl font-bold shadow-lg shadow-cyan-500/25">
-                      <FaAward />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Left Column: Education Credentials */}
+          <div className="lg:col-span-7 space-y-6">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <GraduationCap className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+              <span>Academic Degrees</span>
+            </h3>
+
+            <div className="space-y-4">
+              {EDUCATION_DATA.map((edu, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-2xl p-6 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 shadow-md dark:shadow-none transition-all duration-300 space-y-3"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-extrabold uppercase bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
+                        {edu.status}
+                      </span>
+                      <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-1">{edu.degree} — {edu.field}</h4>
+                      <div className="text-xs sm:text-sm text-cyan-600 dark:text-cyan-400 font-semibold">{edu.institution}</div>
                     </div>
 
-                    <span
-                      className={`text-xs font-bold px-3 py-1 rounded-full border flex items-center gap-1.5 backdrop-blur-md ${
-                        cert.status === "Verified" || cert.status === "Completed"
-                          ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/40"
-                          : "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/40"
-                      }`}
-                    >
-                      {cert.status === "Verified" || cert.status === "Completed" ? (
-                        <FaCheckCircle className="text-emerald-600 dark:text-emerald-400 text-xs" />
+                    <div className="flex items-center gap-1.5 text-xs font-mono text-slate-600 dark:text-slate-400 shrink-0">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>{edu.period}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-400 leading-relaxed font-medium">
+                    {edu.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column: Certifications & Hands-on Training */}
+          <div className="lg:col-span-5 space-y-6">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Award className="w-5 h-5 text-amber-500 dark:text-amber-400" />
+              <span>Certifications & Specialized Training</span>
+            </h3>
+
+            <div className="space-y-4">
+              {CERTIFICATIONS.map((cert, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-2xl p-6 bg-gradient-to-br from-amber-50/50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 border border-slate-200 dark:border-slate-800 hover:border-amber-500/40 shadow-md dark:shadow-none transition-all duration-300 space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
+                      {cert.icon === 'Sparkles' ? (
+                        <Sparkles className="w-5 h-5 text-amber-500 dark:text-amber-400" />
                       ) : (
-                        <FaHourglassHalf className="text-amber-600 dark:text-amber-400 text-xs" />
+                        <Award className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                       )}
-                      {cert.status}
+                    </div>
+                    <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
+                      VERIFIED
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-xs font-bold text-cyan-700 dark:text-cyan-400 uppercase tracking-wider font-mono-code">
-                      {cert.issuer}
-                    </span>
-                    <h3 className="mt-1 text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
-                      {cert.title}
-                    </h3>
+                    <h4 className="text-base font-bold text-slate-900 dark:text-white">{cert.title}</h4>
+                    <div className="text-xs font-mono text-slate-600 dark:text-slate-400 mt-0.5">Issuer: {cert.issuer}</div>
                   </div>
 
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 font-mono-code">
-                    📅 {cert.duration}
-                  </p>
-
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-700 dark:text-slate-400 leading-relaxed font-medium">
                     {cert.description}
                   </p>
                 </div>
+              ))}
 
-                {/* Skills Tags & Action Link */}
-                <div className="space-y-5 pt-4 border-t border-slate-200 dark:border-slate-800/80">
-                  <div className="flex flex-wrap gap-1.5">
-                    {cert.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="text-[11px] font-medium px-2.5 py-1 rounded-lg border border-slate-200 dark:border-cyan-500/20 bg-slate-100 dark:bg-cyan-500/10 text-slate-700 dark:text-cyan-300"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
-                  {cert.verifyUrl ? (
-                    <a
-                      href={cert.verifyUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs sm:text-sm transition-all shadow-lg shadow-cyan-500/25 cursor-pointer hover:scale-102"
-                    >
-                      <FaExternalLinkAlt className="text-xs" /> Verify Official Credential
-                    </a>
-                  ) : cert.hasCertificate && cert.certificateUrl ? (
-                    <a
-                      href={cert.certificateUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-white transition-all text-xs font-bold cursor-pointer"
-                    >
-                      <FaCertificate className="text-cyan-600 dark:text-cyan-400" /> View Certificate PDF
-                    </a>
-                  ) : (
-                    <div className="w-full py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/80 text-center text-xs text-slate-500 dark:text-slate-400 font-mono-code flex items-center justify-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-                      Official Certificate Issuance Pending
-                    </div>
-                  )}
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/80 shadow-sm space-y-2 text-xs text-slate-700 dark:text-slate-400 font-medium">
+                <div className="font-mono font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Continuous Certification Path</span>
                 </div>
+                <div>Preparing for Microsoft Certified: Azure DevOps Engineer Expert (AZ-400) & Terraform Associate certification exams.</div>
+              </div>
+            </div>
 
-              </motion.div>
-            </FadeIn>
-          ))}
+          </div>
+
         </div>
 
       </div>
     </section>
   );
-}
+};
+
+export default CertificationSection;

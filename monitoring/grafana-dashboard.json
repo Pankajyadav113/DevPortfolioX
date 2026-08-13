@@ -1,8 +1,0 @@
-{
-  "title": "DevPortfolio Monitoring Dashboard",
-  "timezone": "browser",
-  "schemaVersion": 39,
-  "version": 1,
-  "refresh": "10s",
-  "panels": []
-}

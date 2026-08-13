@@ -1,137 +1,157 @@
-import { useState } from "react";
-import { Link } from "react-scroll";
-import { HiMenuAlt3, HiX } from "react-icons/hi";
-import { FaTerminal, FaPaperPlane } from "react-icons/fa";
-import { siteConfig } from "../../constants/siteConfig";
+import React, { useState } from 'react';
+import { PERSONAL_INFO } from '../../data/portfolioData';
+import { Menu, X, Sun, Moon, Download, Terminal } from 'lucide-react';
 
-function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+interface NavbarProps {
+  isDarkMode: boolean;
+  onToggleTheme: () => void;
+  onToggleTerminal?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onToggleTheme, onToggleTerminal }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navLinks = [
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Contact', href: '#contact' },
+  ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-slate-800/80 bg-[#070b14]/80 backdrop-blur-xl transition-all duration-300">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-        {/* Logo & Brand */}
-        <Link
-          to="home"
-          smooth={true}
-          duration={500}
-          offset={-80}
-          className="group cursor-pointer flex items-center gap-2 text-xl font-extrabold tracking-tight"
-        >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 p-2 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-            <FaTerminal className="text-slate-950 text-lg" />
-          </div>
-          <span className="bg-gradient-to-r from-white via-slate-100 to-cyan-400 bg-clip-text text-transparent">
-            {siteConfig.name}
-          </span>
-        </Link>
-
-        {/* Desktop Navigation Links */}
-        <nav className="hidden items-center gap-7 lg:flex">
-          {siteConfig.navLinks.map((link) => (
-            <Link
-              key={link.label}
-              to={link.href.replace("#", "")}
-              smooth={true}
-              duration={500}
-              offset={-80}
-              spy={true}
-              activeClass="!text-cyan-400 font-bold after:w-full"
-              className="
-                relative
-                cursor-pointer
-                text-sm
-                font-medium
-                text-slate-300
-                transition-all
-                duration-300
-                hover:text-cyan-300
-                after:absolute
-                after:-bottom-2
-                after:left-0
-                after:h-[2px]
-                after:w-0
-                after:rounded-full
-                after:bg-cyan-400
-                after:transition-all
-                after:duration-300
-                hover:after:w-full
-              "
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Right CTA Button & Status */}
-        <div className="hidden items-center gap-4 lg:flex">
-          <div className="hidden xl:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-xs font-semibold text-emerald-400">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            {siteConfig.hero.statusPill}
-          </div>
-
-          <Link
-            to="contact"
-            smooth={true}
-            duration={500}
-            offset={-80}
-            className="cursor-pointer flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-2.5 text-sm font-bold text-slate-950 shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/40"
-          >
-            <FaPaperPlane className="text-xs" />
-            Let's Talk
-          </Link>
-        </div>
-
-        {/* Mobile Toggle Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle Navigation Menu"
-          className="rounded-xl border border-slate-800 bg-slate-900/80 p-2.5 text-2xl text-cyan-400 transition-colors hover:bg-slate-800 lg:hidden"
-        >
-          {isOpen ? <HiX /> : <HiMenuAlt3 />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer */}
-      {isOpen && (
-        <div className="border-t border-slate-800/80 bg-[#070b14]/95 backdrop-blur-2xl lg:hidden">
-          <nav className="flex flex-col py-4 px-6 gap-2">
-            {siteConfig.navLinks.map((link) => (
-              <Link
-                key={link.label}
-                to={link.href.replace("#", "")}
-                smooth={true}
-                duration={500}
-                offset={-80}
-                spy={true}
-                activeClass="bg-cyan-500/10 text-cyan-400 font-bold border-l-2 border-cyan-400 pl-3"
-                onClick={() => setIsOpen(false)}
-                className="cursor-pointer rounded-xl px-4 py-3 text-base text-slate-300 transition-all hover:bg-slate-900 hover:text-cyan-400"
-              >
-                {link.label}
-              </Link>
-            ))}
-
-            <div className="mt-4 pt-4 border-t border-slate-800/80 flex flex-col gap-3">
-              <Link
-                to="contact"
-                smooth={true}
-                duration={500}
-                offset={-80}
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-cyan-500 py-3 text-center text-sm font-bold text-slate-950"
-              >
-                <FaPaperPlane /> Contact Me
-              </Link>
+    <header className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Floating Centered Glass Pill Container */}
+        <div className={`rounded-full px-4 sm:px-6 py-2 transition-all duration-300 flex items-center justify-between shadow-xl backdrop-blur-xl ${
+          isDarkMode 
+            ? 'bg-[#0B0F19]/90 border border-slate-800/80 text-slate-100 shadow-cyan-950/20' 
+            : 'bg-[#F8FAF7]/95 border border-slate-200/90 text-slate-900 shadow-slate-300/40'
+        }`}>
+          
+          {/* Brand Logo - Left */}
+          <a href="#" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 flex items-center justify-center text-white font-mono font-black text-sm shadow-md group-hover:scale-105 transition-transform shrink-0">
+              &gt;_
             </div>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white leading-tight">
+                Pankaj <span className="text-[#107086] dark:text-cyan-400">Yadav</span>
+              </span>
+              <span className="text-[9px] font-mono font-bold tracking-wider text-[#14798E] dark:text-cyan-400/90 uppercase">
+                SRE &amp; CLOUD ARCHITECTURE
+              </span>
+            </div>
+          </a>
+
+          {/* Desktop Navigation Links - Center Capsule Pill */}
+          <nav className="hidden md:flex items-center space-x-1 lg:space-x-4 px-6 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/60 shadow-xs">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="px-3 py-1 text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-[#0C7B93] dark:hover:text-cyan-400 transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
           </nav>
+
+          {/* Right Controls: Terminal CLI + Resume PDF + Theme Switcher */}
+          <div className="hidden sm:flex items-center gap-2.5">
+            
+            {/* Terminal Quick Button */}
+            {onToggleTerminal && (
+              <button
+                onClick={onToggleTerminal}
+                className="p-2 rounded-full text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                title="Launch Terminal CLI"
+              >
+                <Terminal className="w-4 h-4" />
+              </button>
+            )}
+
+            {/* Resume PDF Gradient Button */}
+            <a
+              href={PERSONAL_INFO.resumePdf}
+              download="Pankaj_Yadav_DevOps_CV.pdf"
+              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white shadow-md shadow-cyan-500/20 transition-all hover:scale-105 cursor-pointer"
+              title="Download Pankaj's Resume PDF"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Resume</span>
+            </a>
+
+            {/* Theme Toggle Button */}
+            <button
+              onClick={onToggleTheme}
+              className="w-9 h-9 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-cyan-500/50 shadow-sm flex items-center justify-center transition-colors cursor-pointer shrink-0"
+              title={isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#107086]" />}
+            </button>
+          </div>
+
+          {/* Mobile Menu Trigger */}
+          <div className="flex items-center gap-2 sm:hidden">
+            {onToggleTerminal && (
+              <button
+                onClick={onToggleTerminal}
+                className="p-1.5 rounded-full border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-200"
+              >
+                <Terminal className="w-4 h-4 text-cyan-500" />
+              </button>
+            )}
+
+            <button
+              onClick={onToggleTheme}
+              className="p-1.5 rounded-full border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-200"
+            >
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#107086]" />}
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-1.5 text-slate-900 dark:text-slate-200"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+
         </div>
-      )}
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className={`sm:hidden mt-2 p-4 rounded-2xl border-2 shadow-xl backdrop-blur-xl ${
+            isDarkMode ? 'bg-slate-950/95 border-slate-800 text-white' : 'bg-white border-slate-300 text-slate-900'
+          }`}>
+            <div className="flex flex-col space-y-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-2 text-sm font-black text-slate-900 dark:text-slate-200 hover:text-cyan-700 rounded-lg"
+                >
+                  {link.name}
+                </a>
+              ))}
+              <div className="pt-3 border-t border-slate-300 dark:border-slate-800 flex items-center justify-between">
+                <a
+                  href={PERSONAL_INFO.resumePdf}
+                  download="Pankaj_Yadav_DevOps_CV.pdf"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-gradient-to-r from-cyan-500 to-emerald-500 text-white"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download Resume PDF</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
-}
+};
 
 export default Navbar;

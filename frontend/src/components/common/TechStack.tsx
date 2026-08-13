@@ -1,148 +1,142 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  FaDocker,
-  FaLinux,
-  FaPython,
-  FaReact,
-  FaTerminal,
-  FaAws,
-  FaShieldAlt,
-} from "react-icons/fa";
-import { VscAzure } from "react-icons/vsc";
-import {
-  SiTerraform,
-  SiKubernetes,
-  SiJenkins,
-  SiGithubactions,
-  SiPrometheus,
-  SiGrafana,
-  SiAnsible,
-  SiTypescript,
-  SiTailwindcss,
-} from "react-icons/si";
-import FadeIn from "../ui/FadeIn";
+import React, { useState } from 'react';
+import { SKILL_CARDS_DATA, type SkillCardItem } from '../../data/portfolioData';
+import { Cloud, FileCode, Boxes, Network, Container, Server, Workflow, GitBranch, Terminal, Code2, Activity, Cpu, Search } from 'lucide-react';
 
-interface TechItem {
-  name: string;
-  category: "Cloud & IaC" | "Containers & K8s" | "CI/CD & OS" | "Observability & Security";
-  icon: any;
-  level: "Advanced" | "Intermediate" | "Proficient";
-  color: string;
-}
+export const TechStack: React.FC = () => {
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-const techList: TechItem[] = [
-  // Cloud & IaC
-  { name: "Microsoft Azure", category: "Cloud & IaC", icon: VscAzure, level: "Advanced", color: "#0089D6" },
-  { name: "AWS Cloud", category: "Cloud & IaC", icon: FaAws, level: "Intermediate", color: "#FF9900" },
-  { name: "Terraform", category: "Cloud & IaC", icon: SiTerraform, level: "Advanced", color: "#844FBA" },
-  { name: "Ansible", category: "Cloud & IaC", icon: SiAnsible, level: "Intermediate", color: "#EE0000" },
+  const categories = [
+    { id: 'all', name: 'All Stack' },
+    { id: 'cloud', name: 'Cloud Architecture' },
+    { id: 'iac', name: 'IaC & Automation' },
+    { id: 'container', name: 'Containers' },
+    { id: 'cicd', name: 'CI/CD & Git' },
+    { id: 'os', name: 'OS & Scripting' },
+    { id: 'monitoring', name: 'Monitoring' }
+  ];
 
-  // Containers & K8s
-  { name: "Docker", category: "Containers & K8s", icon: FaDocker, level: "Advanced", color: "#2496ED" },
-  { name: "Kubernetes", category: "Containers & K8s", icon: SiKubernetes, level: "Intermediate", color: "#326CE5" },
+  const getSkillIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Cloud': return <Cloud className="w-6 h-6 text-cyan-400" />;
+      case 'FileCode': return <FileCode className="w-6 h-6 text-purple-400" />;
+      case 'Boxes': return <Boxes className="w-6 h-6 text-purple-400" />;
+      case 'Network': return <Network className="w-6 h-6 text-blue-400" />;
+      case 'Container': return <Container className="w-6 h-6 text-sky-400" />;
+      case 'Server': return <Server className="w-6 h-6 text-emerald-400" />;
+      case 'Workflow': return <Workflow className="w-6 h-6 text-teal-400" />;
+      case 'GitBranch': return <GitBranch className="w-6 h-6 text-amber-400" />;
+      case 'Terminal': return <Terminal className="w-6 h-6 text-green-400" />;
+      case 'Code2': return <Code2 className="w-6 h-6 text-indigo-400" />;
+      case 'Activity': return <Activity className="w-6 h-6 text-rose-400" />;
+      default: return <Cpu className="w-6 h-6 text-teal-400" />;
+    }
+  };
 
-  // CI/CD & OS
-  { name: "GitHub Actions", category: "CI/CD & OS", icon: SiGithubactions, level: "Advanced", color: "#2088FF" },
-  { name: "Jenkins", category: "CI/CD & OS", icon: SiJenkins, level: "Intermediate", color: "#D24939" },
-  { name: "Linux Administration", category: "CI/CD & OS", icon: FaLinux, level: "Advanced", color: "#FCC624" },
-  { name: "Bash Scripting", category: "CI/CD & OS", icon: FaTerminal, level: "Advanced", color: "#4EAA25" },
-
-  // Observability & Security
-  { name: "Prometheus", category: "Observability & Security", icon: SiPrometheus, level: "Intermediate", color: "#E6522C" },
-  { name: "Grafana", category: "Observability & Security", icon: SiGrafana, level: "Intermediate", color: "#F46800" },
-  { name: "SonarQube", category: "Observability & Security", icon: FaShieldAlt, level: "Proficient", color: "#4E9BCD" },
-
-  // App Stack
-  { name: "TypeScript", category: "CI/CD & OS", icon: SiTypescript, level: "Proficient", color: "#3178C6" },
-  { name: "React", category: "CI/CD & OS", icon: FaReact, level: "Proficient", color: "#61DAFB" },
-  { name: "Tailwind CSS", category: "CI/CD & OS", icon: SiTailwindcss, level: "Advanced", color: "#06B6D4" },
-  { name: "Python", category: "CI/CD & OS", icon: FaPython, level: "Proficient", color: "#3776AB" },
-];
-
-const categories = ["All", "Cloud & IaC", "Containers & K8s", "CI/CD & OS", "Observability & Security"] as const;
-
-export default function TechStack() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-
-  const filteredTech = selectedCategory === "All"
-    ? techList
-    : techList.filter((item) => item.category === selectedCategory);
+  const filteredSkills = SKILL_CARDS_DATA.filter((skill: SkillCardItem) => {
+    const matchesCategory = activeCategory === 'all' || skill.category === activeCategory;
+    const matchesSearch = skill.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          skill.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <section id="skills" className="py-24 bg-[#f8fafc] dark:bg-[#070b14] relative overflow-hidden transition-colors duration-300">
-      <div className="mx-auto max-w-7xl px-6 relative z-10">
+    <section id="skills" className="py-20 px-4 sm:px-6 relative">
+      <div className="max-w-6xl mx-auto space-y-12">
         
-        <FadeIn>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-widest text-cyan-700 dark:text-cyan-400 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-              Technical Skill Set Matrix
-            </span>
-            <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
-              Tech Stack & Tooling
-            </h2>
-            <div className="mx-auto mt-4 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500" />
-            <p className="mt-6 text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-              Technologies, cloud platforms, container tools, and automation frameworks I use to build scalable production environments.
-            </p>
+        {/* Section Title */}
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider">
+            Technical Stack & Expertise Matrix
           </div>
-        </FadeIn>
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
+            DevOps & Cloud <span className="text-cyan-500">Skills Catalog</span>
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium">
+            Categorized overview of hands-on tools, frameworks, cloud services, and automation utilities.
+          </p>
+        </div>
 
-        {/* Filter Categories */}
-        <div className="mt-12 flex flex-wrap justify-center gap-3">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                selectedCategory === cat
-                  ? "bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20"
-                  : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-white"
-              }`}
+        {/* Filter Controls: Search Input + Category Tabs */}
+        <div className="space-y-6">
+          
+          {/* Search Box */}
+          <div className="max-w-md mx-auto relative">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search skills (e.g. Terraform, Docker, Azure, Linux)..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-full bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 shadow-sm transition-colors font-medium"
+            />
+          </div>
+
+          {/* Category Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-4 py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${
+                  activeCategory === cat.id
+                    ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30'
+                    : 'bg-white dark:bg-slate-900/60 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Skills Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredSkills.map((skill) => (
+            <div
+              key={skill.id}
+              className="rounded-2xl p-6 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 hover:bg-slate-50 dark:hover:bg-slate-900/90 shadow-md dark:shadow-none transition-all duration-300 space-y-4 flex flex-col justify-between group"
             >
-              {cat}
-            </button>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    {getSkillIcon(skill.iconName)}
+                  </div>
+                  <span className={`px-2.5 py-0.5 rounded text-[11px] font-mono font-extrabold uppercase border ${
+                    skill.levelBadge === 'Advanced' 
+                      ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30' 
+                      : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                  }`}>
+                    {skill.levelBadge}
+                  </span>
+                </div>
+
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                  {skill.title}
+                </h3>
+
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                  {skill.description}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                <span>Category: {skill.category.toUpperCase()}</span>
+                <span className="text-cyan-600 dark:text-cyan-400 font-semibold">Hands-on Verified</span>
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* Tech Grid Cards */}
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-          {filteredTech.map((item, idx) => {
-            const IconComp = item.icon;
-            return (
-              <FadeIn key={item.name} delay={idx * 0.03}>
-                <motion.div
-                  whileHover={{ y: -6, scale: 1.02 }}
-                  className="group relative rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900/60 p-5 backdrop-blur-md flex flex-col items-center justify-between text-center h-44 shadow-sm transition-all duration-300 hover:border-cyan-500 dark:hover:border-cyan-400 hover:shadow-lg"
-                >
-                  <div className="mt-2 text-4xl transition-transform duration-300 group-hover:scale-110" style={{ color: item.color }}>
-                    <IconComp />
-                  </div>
-
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
-                      {item.name}
-                    </h3>
-                    <span className="mt-1 inline-block text-[11px] font-medium text-slate-500 dark:text-slate-400 font-mono-code">
-                      {item.level}
-                    </span>
-                  </div>
-
-                  <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden mt-2">
-                    <div
-                      className="bg-gradient-to-r from-cyan-500 to-purple-500 h-full rounded-full"
-                      style={{
-                        width: item.level === "Advanced" ? "90%" : item.level === "Intermediate" ? "75%" : "60%",
-                      }}
-                    />
-                  </div>
-                </motion.div>
-              </FadeIn>
-            );
-          })}
-        </div>
+        {filteredSkills.length === 0 && (
+          <div className="text-center py-12 text-slate-500 font-mono text-sm">
+            No matching skills found for "{searchQuery}". Try clearing search filter.
+          </div>
+        )}
 
       </div>
     </section>
   );
-}
+};
+
+export default TechStack;
