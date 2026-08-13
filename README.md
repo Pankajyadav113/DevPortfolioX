@@ -46,44 +46,32 @@
 
 ```text
 DevPortfolioX/
-├── Dockerfile                  # Production Multi-Stage Dockerfile (React + NGINX)
-├── docker-compose.yml          # Container Orchestration Manifest
-├── package.json                # Root metadata & workspaces
+├── .github/                    # GitHub Actions CI/CD Workflows
+│   └── workflows/ci.yml
+├── .gitignore                  # Git Ignore Rules
+├── LICENSE                     # MIT License
 ├── README.md                   # Repository Master Documentation
+├── screenshots/                # Application UI Screenshots
 │
-├── frontend/                   # React 19 TypeScript Vite Frontend
-│   ├── index.html              # Google Fonts (Plus Jakarta Sans & Fira Code) & SEO Meta
-│   ├── package.json
-│   ├── vite.config.ts
-│   └── src/
-│       ├── assets/images/      # Project Architecture Diagrams & Profile Image
-│       ├── components/
-│       │   ├── common/         # Hero, About, TechStack, Projects, DevOpsWorkflow, Experience, Certifications, GitHub, Contact
-│       │   ├── layout/         # Glass Navbar & Footer
-│       │   └── ui/             # InteractiveTerminal, ProjectModal, ScrollProgress, ScrollToTop, FadeIn
-│       ├── constants/          # siteConfig, projects, certifications, contact, github
-│       ├── index.css           # Design Tokens, Custom Scrollbars & Ambient Grid
-│       └── pages/              # HomePage
+├── frontend/                   # React 19 + TypeScript + Vite Frontend
+│   ├── public/                 # Favicons, Resume PDF, Certificates & Static Media
+│   ├── src/
+│   │   ├── components/         # UI Components (Hero, About, TechStack, Projects, Experience, Contact, Navbar, Footer)
+│   │   ├── constants/          # Site Configuration & Data Definitions
+│   │   ├── data/               # Portfolio Data Specifications
+│   │   └── pages/              # HomePage Layout & Routing
+│   ├── package.json            # Frontend Dependencies & Scripts
+│   └── vite.config.ts          # Vite Configuration
 │
-├── backend/                    # Node.js Express & MongoDB REST API
-│   ├── package.json
-│   ├── .env                    # Environment Variables (Port, Mongo URI, SMTP)
-│   └── src/
-│       ├── server.js           # Server Entrypoint
-│       ├── app.js              # Express Application Config & Middleware
-│       ├── config/db.js        # MongoDB Mongoose Connection
-│       ├── controllers/        # Contact & Health API Controllers
-│       ├── models/             # Mongoose Contact Schema
-│       ├── routes/             # Express API Router
-│       └── services/           # Nodemailer Email Dispatcher
-│
-├── docker/                     # Secondary NGINX configuration & Docker setup
-├── kubernetes/                 # Deployment, Service, Ingress & ConfigMap Manifests
-├── jenkins/                    # Jenkinsfile CI/CD Declarative Pipeline
-├── monitoring/                 # Prometheus & Grafana Configuration Files
-├── terraform/                  # HashiCorp Terraform Azure Architecture Module Docs
-├── scripts/                    # Automation Shell Scripts (build, deploy, docker)
-└── docs/                       # Architectural Specifications & Troubleshooting
+└── backend/                    # Node.js Express REST API & MongoDB
+    ├── src/
+    │   ├── config/             # Database Connection (MongoDB Mongoose)
+    │   ├── controllers/        # Contact & Health API Handlers
+    │   ├── models/             # Contact Schema Definition
+    │   ├── routes/             # Express API Endpoints
+    │   ├── services/           # Nodemailer Email Service
+    │   └── server.js           # Server Entrypoint
+    └── package.json            # Backend Dependencies & Scripts
 ```
 
 ---
