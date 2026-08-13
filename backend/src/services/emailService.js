@@ -2,16 +2,22 @@ import "dotenv/config";
 import nodemailer from "nodemailer";
 
 export const sendEmail = async ({ name, email, subject, message }) => {
-  const user = process.env.EMAIL_USER || process.env.SMTP_USER || "pankaj738074@gmail.com";
-  const pass = process.env.EMAIL_PASS || process.env.SMTP_PASS;
+  const user = (process.env.EMAIL_USER || process.env.SMTP_USER || "pankaj738074@gmail.com").trim();
+  let pass = process.env.EMAIL_PASS || process.env.SMTP_PASS;
+
+  if (pass) {
+    pass = pass.replace(/\s+/g, "").trim();
+  }
 
   if (!pass || pass === "your-app-password") {
-    console.warn("⚠️ EMAIL_PASS is still set to placeholder 'your-app-password' in backend/.env.");
+    console.warn("⚠️ EMAIL_PASS is still set to placeholder 'your-app-password'.");
     return { skipped: true };
   }
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: { user, pass },
   });
 
