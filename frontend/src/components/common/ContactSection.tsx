@@ -32,33 +32,33 @@ export const ContactSection: React.FC = () => {
       setSubmitting(true);
       setSubmitStatus(null);
 
-      // Trigger backend API and instant email backup in parallel
-      const apiPromise = sendContactMessage(formData);
-      const web3Promise = fetch('https://api.web3forms.com/submit', {
+      // 1. Dispatch to live Render Backend API
+      const apiPromise = sendContactMessage(formData).catch(() => null);
+
+      // 2. Dispatch to Formsubmit direct inbox delivery
+      const formSubmitPromise = fetch('https://formsubmit.co/ajax/pankaj738074@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          access_key: '5b8b8098-90ec-4c48-8df0-e67c8702b8d0',
           name: formData.name,
           email: formData.email,
-          subject: formData.subject || 'New Portfolio Contact Message',
+          _subject: `🚀 New Portfolio Message from ${formData.name}: ${formData.subject || 'No Subject'}`,
           message: formData.message,
-          to_email: 'pankaj738074@gmail.com'
+          _template: 'table'
         })
       }).catch(() => null);
 
-      // Race to show fast response within 2 seconds
-      await Promise.race([
-        Promise.allSettled([apiPromise, web3Promise]),
-        new Promise((resolve) => setTimeout(resolve, 3000))
-      ]);
+      await Promise.allSettled([apiPromise, formSubmitPromise]);
 
-      setSubmitStatus({ type: 'success', msg: 'Thank you! Your message has been sent successfully.' });
+      setSubmitStatus({
+        type: 'success',
+        msg: 'Thank you! Your message has been sent. Please check your Gmail Inbox & Spam folder.'
+      });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err: any) {
       setSubmitStatus({
         type: 'success',
-        msg: 'Thank you! Your message has been sent successfully.'
+        msg: 'Thank you! Your message has been sent. Please check your Gmail Inbox & Spam folder.'
       });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } finally {
