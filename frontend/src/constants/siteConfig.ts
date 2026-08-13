@@ -30,7 +30,7 @@ export const siteConfig = {
     phone: "+91 7238922584",
 
 
-    location: "Uttar Pradesh, India",
+    location: "Prayagraj, UP, India",
     resume: "/resume/resume.pdf",
 
   },

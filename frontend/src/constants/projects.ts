@@ -103,7 +103,7 @@ export const projects: Project[] = [
       "Ran TypeScript typechecks and linting validations",
       "Built Docker container artifact and published execution metrics",
     ],
-    github: "https://github.com/Pankajyadav113/DevPortfolioX",
+    github: "https://github.com/Pankajyadav113/GitHub-Actions-CI-CD-Pipeline-for-Azure",
     live: "",
   },
   {
@@ -129,59 +129,7 @@ export const projects: Project[] = [
       "Provisioned Grafana with automated data source auto-discovery",
       "Validated pod metric scraping and dashboard alerts",
     ],
-    github: "https://github.com/Pankajyadav113/DevPortfolioX",
-    live: "",
-  },
-  {
-    id: 5,
-    title: "DevSecOps Pipeline Security Integrations",
-    category: "DevSecOps",
-    description:
-      "Automated security scanning pipeline integrating Trivy for container vulnerability checks, Checkov for IaC compliance, and SonarQube for static analysis.",
-    longDescription:
-      "Integrating DevSecOps best practices directly into the CI pipeline to catch vulnerabilities early in the development lifecycle. The pipeline automatically inspects Terraform files with Checkov for misconfigurations, scans Docker images with Trivy for CVE vulnerabilities, and validates code quality with SonarQube.",
-    status: "In Progress",
-    image: githubActionsImg,
-    techStack: ["Trivy", "Checkov", "SonarQube", "DevSecOps", "GitHub Actions", "Docker"],
-    features: [
-      "Trivy automated container vulnerability scanner integration",
-      "Checkov static code analysis for Terraform misconfigurations",
-      "Automated SARIF report uploads to GitHub Security tab",
-      "Quality Gate enforcement blocking vulnerable commits",
-    ],
-    architectureSteps: [
-      "Integrated Checkov action scanning HCL code prior to plan execution",
-      "Added Trivy image scanner step failing builds on HIGH/CRITICAL CVEs",
-      "Configured SonarQube code smell and security bug detection",
-      "Aggregated vulnerability findings into build summary",
-    ],
-    github: "https://github.com/Pankajyadav113/DevPortfolioX",
-    live: "",
-  },
-  {
-    id: 6,
-    title: "Enterprise Jenkins Automation Pipeline",
-    category: "CI/CD & Automation",
-    description:
-      "Jenkins-based declarative CI/CD pipeline featuring agent pod execution, automated testing, container registry push, and target server deployment.",
-    longDescription:
-      "Configuring an enterprise Jenkins pipeline using Jenkinsfile syntax. The workflow handles agent node setup on Docker/K8s, source checkout, environment secret injection, container building, vulnerability scanning, and automated deployment with rollback capabilities.",
-    status: "In Progress",
-    image: dockerImg,
-    techStack: ["Jenkins", "Groovy", "CI/CD", "Docker", "Linux", "Bash"],
-    features: [
-      "Declarative Jenkinsfile pipeline with parameterized triggers",
-      "Docker-in-Docker agent container execution environment",
-      "Automated credentials vault integration for registry tokens",
-      "Slack/Email webhook notifications on build outcomes",
-    ],
-    architectureSteps: [
-      "Configured Jenkins controller master and agent setup",
-      "Wrote Jenkinsfile stage blocks for Checkout, Build, Test, Deploy",
-      "Integrated Docker registry authentication step",
-      "Added post-execution cleanup and alert hooks",
-    ],
-    github: "https://github.com/Pankajyadav113/DevPortfolioX",
+    github: "https://github.com/Pankajyadav113/kubernetes-monitoring-stack",
     live: "",
   },
 ];

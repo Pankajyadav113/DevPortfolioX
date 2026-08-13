@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import { Menu, X, Sun, Moon, Download, Terminal } from 'lucide-react';
 
@@ -10,14 +10,39 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onToggleTheme, onToggleTerminal }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('about');
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'About', href: '#about', id: 'about' },
+    { name: 'Skills', href: '#skills', id: 'skills' },
+    { name: 'Projects', href: '#projects', id: 'projects' },
+    { name: 'Experience', href: '#experience', id: 'experience' },
+    { name: 'Contact', href: '#contact', id: 'contact' },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sectionIds = ['about', 'skills', 'projects', 'experience', 'contact'];
+      const scrollPosition = window.scrollY + 250;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sectionIds[i]);
+        if (section) {
+          const top = section.offsetTop;
+          const height = section.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(sectionIds[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <header className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6">
@@ -45,16 +70,24 @@ export const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onToggleTheme, onTog
           </a>
 
           {/* Desktop Navigation Links - Center Capsule Pill */}
-          <nav className="hidden md:flex items-center space-x-1 lg:space-x-4 px-6 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/60 shadow-xs">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="px-3 py-1 text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-[#0C7B93] dark:hover:text-cyan-400 transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
+          <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 px-3 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/60 shadow-xs">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setActiveSection(link.id)}
+                  className={`px-3.5 py-1 text-xs sm:text-sm font-bold rounded-full transition-all duration-300 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#0C7B93] to-emerald-500 text-white shadow-md shadow-cyan-500/25 scale-105 font-extrabold'
+                      : 'text-slate-700 dark:text-slate-300 hover:text-[#0C7B93] dark:hover:text-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
+                  }`}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Right Controls: Terminal CLI + Resume PDF + Theme Switcher */}
@@ -125,17 +158,27 @@ export const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onToggleTheme, onTog
           <div className={`sm:hidden mt-2 p-4 rounded-2xl border-2 shadow-xl backdrop-blur-xl ${
             isDarkMode ? 'bg-slate-950/95 border-slate-800 text-white' : 'bg-white border-slate-300 text-slate-900'
           }`}>
-            <div className="flex flex-col space-y-2">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 text-sm font-black text-slate-900 dark:text-slate-200 hover:text-cyan-700 rounded-lg"
-                >
-                  {link.name}
-                </a>
-              ))}
+            <div className="flex flex-col space-y-1.5">
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => {
+                      setActiveSection(link.id);
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`px-3 py-2 text-sm font-black rounded-xl transition-all ${
+                      isActive
+                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                        : 'text-slate-900 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80'
+                    }`}
+                  >
+                    {link.name}
+                  </a>
+                );
+              })}
               <div className="pt-3 border-t border-slate-300 dark:border-slate-800 flex items-center justify-between">
                 <a
                   href={PERSONAL_INFO.resumePdf}

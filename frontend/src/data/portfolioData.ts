@@ -47,7 +47,7 @@ I believe in learning by building real-world projects rather than only studying 
   githubHandle: "github.com/Pankajyadav113",
   linkedin: "https://www.linkedin.com/in/pankajyadav113",
   linkedinHandle: "linkedin.com/in/pankajyadav113",
-  location: "Azamgarh, UP, India",
+  location: "Prayagraj, UP, India",
   college: "Dr. A P J Abdul Kalam Technical University Lucknow",
   degree: "Bachelor of Engineering (B.Tech)",
   internshipRole: "DevOps Engineer Intern",
@@ -279,7 +279,7 @@ export const PROJECTS: Project[] = [
       "Maintained secret parameters securely using GitHub Repository Secrets."
     ],
     keyLearning: "Gained direct hands-on experience structuring automated CI/CD pipelines to catch build regressions early in release workflows.",
-    githubUrl: "https://github.com/Pankajyadav113/DevPortfolioX"
+    githubUrl: "https://github.com/Pankajyadav113/GitHub-Actions-CI-CD-Pipeline-for-Azure"
   },
   {
     id: "kubernetes-monitoring",
@@ -295,39 +295,7 @@ export const PROJECTS: Project[] = [
       "Imported custom Grafana dashboards for visual cluster resource utilization monitoring."
     ],
     keyLearning: "Acquired real-world experience in Kubernetes resource management, pod networking, and telemetry observability.",
-    githubUrl: "https://github.com/Pankajyadav113/DevPortfolioX"
-  },
-  {
-    id: "devsecops-pipeline",
-    title: "DevSecOps Security Pipeline",
-    shortDescription: "Integrated security scanning into pipeline using Trivy, Checkov, and SonarQube for container and IaC vulnerability detection.",
-    fullOverview: "Learning DevSecOps best practices by integrating Trivy, Checkov, and SonarQube for container image vulnerability scanning, Infrastructure as Code security static analysis, and code quality checks.",
-    technologies: ["Trivy", "Checkov", "SonarQube", "DevSecOps", "Docker", "Terraform"],
-    category: "cicd",
-    featured: false,
-    keyImplementation: [
-      "Integrated Trivy container image scanner to block deployment of images with critical vulnerabilities.",
-      "Used Checkov for static analysis of Terraform IaC manifests.",
-      "Executed SonarQube code quality inspections."
-    ],
-    keyLearning: "Understood shift-left security principles in modern DevOps delivery.",
-    githubUrl: "https://github.com/Pankajyadav113/DevPortfolioX"
-  },
-  {
-    id: "jenkins-cicd-pipeline",
-    title: "Jenkins CI/CD Pipeline Automation",
-    shortDescription: "Automated Jenkins pipeline script with stages for build, test, Docker image creation, and automated deployment.",
-    fullOverview: "Building a Jenkins-based Continuous Integration and Continuous Deployment pipeline with automated build, testing, Docker image packaging, and deployment workflows using Jenkinsfile syntax.",
-    technologies: ["Jenkins", "CI/CD", "Groovy", "Linux", "Docker"],
-    category: "cicd",
-    featured: false,
-    keyImplementation: [
-      "Wrote declarative Jenkinsfile pipelines defining multi-stage build processes.",
-      "Configured Jenkins webhooks to trigger automated builds upon code commits.",
-      "Managed environment credentials securely within Jenkins credentials manager."
-    ],
-    keyLearning: "Mastered Jenkins job configuration, agent execution, and pipeline stage orchestration.",
-    githubUrl: "https://github.com/Pankajyadav113/DevPortfolioX"
+    githubUrl: "https://github.com/Pankajyadav113/kubernetes-monitoring-stack"
   }
 ];
 
@@ -394,7 +362,7 @@ export const EXPERIENCE_DATA = [
   {
     company: "DevOps Insiders",
     role: "DevOps Engineer Intern",
-    period: "Dec 2025 – Present",
+    period: "Jan 2026 – Present",
     location: "Remote / Hands-on Lab",
     type: "Internship",
     description: "Hands-on intensive Azure DevOps engineering training focusing on cloud infrastructure automation, custom VM imaging, containerization, and DevSecOps pipelines.",
@@ -405,7 +373,23 @@ export const EXPERIENCE_DATA = [
       "Created and maintained Dockerfiles to containerize applications, following best practices for image size, security, and performance.",
       "Automated creation of custom Azure VM images using HashiCorp Packer, reducing VM provisioning time and ensuring standardized, secure base images across Dev/Test/Prod."
     ],
-    tech: ["Azure", "Terraform", "Docker", "Packer", "Linux", "Git", "PowerShell", "Bash", "CI/CD"]
+    tech: ["Azure", "Terraform", "Docker", "Kubernetes", "Packer", "Linux", "Git", "PowerShell", "Bash", "CI/CD"]
+  },
+  {
+    company: "IBM SkillsBuild & NASSCOM",
+    role: "Cloud Computing Virtual Intern",
+    period: "1 Month (Completed - Certificate Awaiting)",
+    location: "Remote / Virtual Program",
+    type: "Virtual Internship",
+    description: "Intensive 1-month Cloud Computing Internship program authorized jointly by IBM SkillsBuild and NASSCOM, focusing on cloud architecture concepts, deployment models, and cloud infrastructure management.",
+    highlights: [
+      "Explored core Cloud Computing paradigms including Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS).",
+      "Gained practical exposure to cloud resource allocation, virtualization, and hybrid cloud architecture security protocols.",
+      "Completed hands-on labs and practical assignments on IBM SkillsBuild learning pathways focused on modern cloud server management.",
+      "Applied cloud storage, networking concepts, and IAM role management principles in simulated cloud environment labs.",
+      "Designed an end-to-end cloud solution architecture project blueprint as part of the internship capstone assessment."
+    ],
+    tech: ["Cloud Computing", "IBM Cloud", "IaaS/PaaS", "Virtualization", "Cloud Security", "Linux"]
   }
 ];
 
@@ -438,10 +422,12 @@ export const EDUCATION_DATA = [
 
 export const CERTIFICATIONS = [
   {
-    title: "GenAI Course Completion",
-    issuer: "Generative AI Foundations",
-    description: "Gained comprehensive exposure to modern AI concepts, prompt engineering, and generative AI tool integration.",
-    icon: "Sparkles"
+    title: "Terraform for the Absolute Beginner with Hands-on Labs",
+    issuer: "KodeKloud (via Coursera)",
+    date: "Jul 3, 2026",
+    verifyUrl: "https://coursera.org/verify/1MOD6SH4Q3QK",
+    description: "Successfully completed hands-on certification training on Terraform Infrastructure as Code (IaC), authorized by KodeKloud and offered through Coursera.",
+    icon: "Award"
   },
   {
     title: "Hands-on Azure DevOps Training",
@@ -499,11 +485,11 @@ export const TERMINAL_COMMANDS: TerminalCommand[] = [
     command: "projects",
     description: "List projects",
     output: [
-      "1. [IaC]     Azure Infrastructure Automation using Terraform -> https://github.com/Pankajyadav113/AWS_Terraform_Practice",
-      "2. [Docker]  Docker & Containerization Deployment Project  -> https://github.com/Pankajyadav113/nginx-docker-project",
-      "3. [FullStack] DevPortfolioX Full-Stack DevOps Platform      -> https://github.com/Pankajyadav113/DevPortfolioX",
-      "4. [Cloud]   Azure VM & Cloud Networking Architecture      -> https://github.com/Pankajyadav113/AWS_Terraform_Practice",
-      "5. [Testing] Cloud Application Load & Capacity Testing     -> https://github.com/Pankajyadav113/nginx-docker-project"
+      "1. [IaC]        Azure Infrastructure Automation using Terraform -> https://github.com/Pankajyadav113/Terraform_Practice",
+      "2. [Docker]     Docker & Containerization Deployment Project    -> https://github.com/Pankajyadav113/nginx-docker-project",
+      "3. [FullStack]  DevPortfolioX Full-Stack DevOps Platform        -> https://github.com/Pankajyadav113/DevPortfolioX",
+      "4. [CI/CD]      GitHub Actions Automated CI/CD Pipeline          -> https://github.com/Pankajyadav113/GitHub-Actions-CI-CD-Pipeline-for-Azure",
+      "5. [Monitoring] Kubernetes Monitoring Stack (Prometheus & Grafana)-> https://github.com/Pankajyadav113/kubernetes-monitoring-stack"
     ]
   },
   {

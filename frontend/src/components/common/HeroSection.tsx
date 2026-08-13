@@ -184,7 +184,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenTerminal }) => {
                 </button>
               )}
             </div>
-
           </div>
         </div>
 
